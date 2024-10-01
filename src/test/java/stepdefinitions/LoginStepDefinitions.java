@@ -1,13 +1,21 @@
 package stepdefinitions;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.support.ui.Select;
 import pages.CLContactsPage;
 import pages.CLHomePage;
+import pages.ToDoListPage;
+import pages.WebTablePage;
 import utilities.ConfigReader;
 import utilities.Driver;
+
+import java.util.List;
+import java.util.Map;
 
 public class LoginStepDefinitions {
 
@@ -31,7 +39,7 @@ public class LoginStepDefinitions {
 
     @When("the user clicks on submit button")
     public void the_user_clicks_on_submit_button() {
-
+        clHomePage = new CLHomePage();
         clHomePage.submit.click();
 
     }
@@ -47,4 +55,68 @@ public class LoginStepDefinitions {
     public void closeTheDriver() {
         Driver.closeDriver();
     }
+
+
+    @When("the user enters invalid credentials")
+    public void theUserEntersInvalidCredentials() {
+        clHomePage = new CLHomePage();
+
+        clHomePage.email.sendKeys("invalideusername");
+        clHomePage.password.sendKeys(ConfigReader.getProperty("password"));
+    }
+
+
+    @Then("the user sees the error message")
+    public void theUserSeesTheErrorMessage() throws InterruptedException {
+        clHomePage = new CLHomePage();
+        Thread.sleep(500);
+        assert clHomePage.error.isDisplayed();
+    }
+
+    @When("the user enters username {string} password {string}")
+    public void theUserEntersUsernamePassword(String username, String password) {
+        clHomePage = new CLHomePage();
+
+        clHomePage.email.sendKeys(username);
+        clHomePage.password.sendKeys(password);
+
+    }
+
+    @Given("go to {string}")
+    public void go_to(String url) {
+        Driver.getDriver().get(url);
+    }
+
+    @When("enter todos")
+    public void enter_todos(DataTable dataTable) {
+
+        ToDoListPage toDoListPage = new ToDoListPage();
+        List<String> toDos = dataTable.asList();
+
+        for (String w : toDos) {
+            toDoListPage.addToDo.sendKeys(w + Keys.ENTER);
+        }
+
+    }
+
+    @When("user enters name and age")
+    public void user_enters_name_and_age(DataTable dataTable) {
+
+        WebTablePage webTablePage = new WebTablePage();
+        Map<String, String> nameAge = dataTable.asMap();
+
+        for (Map.Entry<String, String> w : nameAge.entrySet()) {
+            String name = w.getKey();
+            String age = w.getValue();
+
+            webTablePage.nameInput.sendKeys(name);
+            webTablePage.ageInput.sendKeys(age);
+            new Select(webTablePage.countrySelect).selectByIndex(1);
+            webTablePage.addRecord.click();
+        }
+
+
+    }
+
+
 }

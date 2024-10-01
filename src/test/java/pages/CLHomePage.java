@@ -20,5 +20,8 @@ public class CLHomePage {
     @FindBy(id = "submit")
     public WebElement submit;
 
+    @FindBy(id = "error")
+    public WebElement error;
+
 
 }
