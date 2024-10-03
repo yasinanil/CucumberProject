@@ -6,9 +6,16 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
+        plugin = {
+                "html:target/reports/html-report.html",
+                "json:target/reports/json-report.json",
+                "junit:target/reports/xml-report.xml",
+                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
+                "pretty"
+        },
         features = "src/test/resources/features", // Path to the feature files
         glue = "stepdefinitions",                  // Path to the step definitions package
-        tags = "@WebTableMap",                       // Tags to specify which scenarios to run
+        tags = "@ToDoList",                       // Tags to specify which scenarios to run
         dryRun = false                             // Set to true to verify if all steps are defined
 )
 public class Runner {

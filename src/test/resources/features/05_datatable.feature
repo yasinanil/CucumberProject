@@ -1,6 +1,7 @@
 @DataTable
 Feature: Data Table
 
+  @ToDoList
   Scenario: Data table as List
     Given go to "https://webdriveruniversity.com/To-Do-List/index.html"
     When enter todos
