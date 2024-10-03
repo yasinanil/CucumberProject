@@ -29,6 +29,7 @@ Feature: Parameterization Feature
     Then the user sees the error message
     And close the driver
 
+  @SmokeTest
   Scenario:  Login with empty credentials
     When the user enters username "" password ""
     And the user clicks on submit button
