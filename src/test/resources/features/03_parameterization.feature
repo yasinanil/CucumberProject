@@ -23,6 +23,7 @@ Feature: Parameterization Feature
     Then the user sees the error message
     And close the driver
 
+  @Parallel
   Scenario:  Login with valid username invalid password
     When the user enters username "talentifylab@gmail.com" password "xyz"
     And the user clicks on submit button

@@ -22,4 +22,11 @@ public class ConfigReader {
     public static String getProperty(String key) {
         return properties.getProperty(key);
     }
+
+    // Method to set property value
+    public static void setProperty(String key, String value) {
+        properties.setProperty(key, value);
+    }
+
+
 }

@@ -1,4 +1,4 @@
-@DataTable
+@DataTable @Parallel
 Feature: Data Table
 
   @ToDoList

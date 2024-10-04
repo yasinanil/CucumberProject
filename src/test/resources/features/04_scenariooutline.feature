@@ -1,4 +1,4 @@
-@ScenarioOutline
+@ScenarioOutline @Parallel
 Feature: Scenario Outline Feature
 
   Background: Load Page
