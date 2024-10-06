@@ -16,7 +16,7 @@ import io.cucumber.junit.CucumberOptions;
         },
         features = "src/test/resources/features", // Path to the feature files
         glue = {"stepdefinitions","hooks"},                 // Path to the step definitions package
-        tags = "@Parallel",                       // Tags to specify which scenarios to run
+        tags = "@Practice05",                       // Tags to specify which scenarios to run
         dryRun = false                             // Set to true to verify if all steps are defined
 )
 public class Runner {

@@ -4,8 +4,13 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.support.ui.Select;
 import pages.WebTablePage;
+import utilities.Driver;
+import utilities.ExcelUtils;
 
+import java.util.Arrays;
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 public class WebTableStepDefinitions {
     @When("user enters name and age")
@@ -25,5 +30,30 @@ public class WebTableStepDefinitions {
         }
 
 
+    }
+
+    @When("user enters name, age and country using excel and assert it")
+    public void userEntersNameAgeAndCountryUsingExcelAndAssertIt() {
+
+        ExcelUtils excelUtils = new ExcelUtils("Users.xlsx", "Employees");
+
+        Object[][] data = excelUtils.getExcelData();
+        System.out.println("data = " + Arrays.deepToString(data));
+        WebTablePage webTablePage = new WebTablePage();
+
+        for (Object[] w : data) {
+
+            String name = w[0].toString();
+            String age = w[1].toString();
+            String country = w[2].toString();
+
+            webTablePage.nameInput.sendKeys(name);
+            webTablePage.ageInput.sendKeys(age.substring(0, age.indexOf(".")));
+            new Select(webTablePage.countrySelect).selectByVisibleText(country);
+            webTablePage.addRecord.click();
+
+            assertEquals(name, webTablePage.lastRowName.getText());
+
+        }
     }
 }

@@ -23,6 +23,9 @@ public class WebTablePage {
     @FindBy(xpath = "//*[.='Add Record']")
     public WebElement addRecord;
 
+    @FindBy(xpath = "(//tbody/tr/td[1])[last()]")
+    public WebElement lastRowName;
+
 
 
 
