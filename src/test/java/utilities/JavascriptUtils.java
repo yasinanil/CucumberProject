@@ -3,6 +3,11 @@ package utilities;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class JavascriptUtils {
 
@@ -12,6 +17,13 @@ public class JavascriptUtils {
     public static void clickElementByJS(WebElement element) {
         JavascriptExecutor jsexecutor = ((JavascriptExecutor) Driver.getDriver());
         jsexecutor.executeScript("arguments[0].click();", element);
+    }
+
+    // Clicks on the specified web element using JavaScript after the element is clickable
+    public static void waitAndClick(WebElement element, int durationOfSec) {
+        Wait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(durationOfSec));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+        clickElementByJS(element);
     }
 
     // Retrieves the current page title using JavaScript
@@ -42,21 +54,32 @@ public class JavascriptUtils {
     public static void changeBackgroundColorByJS(WebElement element, String color) {
         JavascriptExecutor javascriptExecutor = ((JavascriptExecutor) Driver.getDriver());
         javascriptExecutor.executeScript("arguments[0].style.backgroundColor = '" + color + "'", element);
+    }
+
+    public static void hardWait(int milliSeconds) {
         try {
-            Thread.sleep(200); // Brief pause to observe the color change
+            Thread.sleep(milliSeconds);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-    // Flashes the background color of the specified element
-    public static void flash(WebElement element) {
-        String bgColor = element.getCssValue("backgroundcolor");
-        for (int i = 0; i < 10; i++) {
-            changeBackgroundColorByJS(element, "rgb(0,200,0)");
-            changeBackgroundColorByJS(element, bgColor);
+    //Flash
+    public static void flash(WebElement element, String color) {
+
+        String backgroundcolor = element.getCssValue("backgroundcolor");
+
+        for (int i = 0; i < 5; i++) {
+
+            changeBackgroundColorByJS(element, color);
+            hardWait(100);
+            changeBackgroundColorByJS(element, backgroundcolor);
+            hardWait(100);
+
         }
+
     }
+
 
     // Generates a JavaScript alert with the specified message
     public static void generateAlert(String message) throws InterruptedException {

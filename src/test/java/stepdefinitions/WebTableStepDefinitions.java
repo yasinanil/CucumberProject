@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static utilities.JavascriptUtils.flash;
 
 public class WebTableStepDefinitions {
     @When("user enters name and age")
@@ -47,11 +48,19 @@ public class WebTableStepDefinitions {
             String age = w[1].toString();
             String country = w[2].toString();
 
+            flash(webTablePage.nameInput, "red");
             webTablePage.nameInput.sendKeys(name);
+
+            flash(webTablePage.ageInput, "red");
             webTablePage.ageInput.sendKeys(age.substring(0, age.indexOf(".")));
+
+            flash(webTablePage.countrySelect, "red");
             new Select(webTablePage.countrySelect).selectByVisibleText(country);
+
+            flash(webTablePage.addRecord, "red");
             webTablePage.addRecord.click();
 
+            flash(webTablePage.lastRowName, "red");
             assertEquals(name, webTablePage.lastRowName.getText());
 
         }
