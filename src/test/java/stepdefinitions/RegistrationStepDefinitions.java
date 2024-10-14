@@ -40,7 +40,7 @@ public class RegistrationStepDefinitions {
 
     @When("upload the CV")
     public void upload_the_cv() {
-        registrationPage.cv.sendKeys(System.getProperty("user.dir")+"/CV.pdf");
+        registrationPage.cv.sendKeys(System.getProperty("user.dir") + "/CV.pdf");
     }
 
     @When("enter the username {string}, email {string} and password {string}")
@@ -65,9 +65,9 @@ public class RegistrationStepDefinitions {
     public void validateRegistrationMessageDidNotAppear() {
         try {
             Driver.getDriver().switchTo().alert();
-            throw new Exception("Invalid SSN Accepted");
+            assert false : "Error: Invalid SSN Accepted";
         } catch (Exception e) {
-          assert  e.getMessage().contains("no such alert");
+            assert e.getMessage().contains("no such alert");
         }
     }
 }
