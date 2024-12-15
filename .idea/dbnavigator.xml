@@ -17,8 +17,40 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="824a9c45-935d-44ec-8cf4-882cdacda0b6">
-      <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[SELECT * FROM Employees
-WHERE Salary > 60000;]]></console>
+      <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[--Find the common name values where the salary is between $1000 and $2000.
+SELECT name
+FROM personnel
+WHERE salary > 1000
+
+INTERSECT
+
+SELECT name
+FROM personnel
+WHERE salary < 2000;
+
+--Find the common name values where the salary is less than $2000 and the company is either IBM, APPLE, or MICROSOFT.
+SELECT name
+FROM personnel
+WHERE salary < 2000
+
+INTERSECT
+
+SELECT name
+FROM personnel
+WHERE company IN('IBM', 'APPLE', 'MICROSOFT');
+
+--EXCEPT Operator: Removes the result of one query from another, returning unique records.
+
+--Find the name values where the salary is less than $3000 and the employee does not work for GOOGLE.
+SELECT name
+FROM personnel
+WHERE salary < 3000
+
+EXCEPT
+
+SELECT name
+FROM personnel
+WHERE company = 'GOOGLE';]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
